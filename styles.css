@@ -9,10 +9,22 @@ body {
     background-color: rgb(252, 246, 189);
 }
 
-.search-container #font{
+#font{
   font-family: Bungee Spice,Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 70px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.search-box input {
+    width: 30%; /* Default width */
+    max-width: 400px; /* Ensures it doesn't get too wide on large screens */
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
 }
 
 
@@ -102,8 +114,14 @@ body {
 
 .pokemon {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.pokemon .pokemon-img {
+    width: 75%;
+    max-width: 400px;
 }
 
 .search-container {
@@ -776,50 +794,88 @@ body {
   border-color: #d25549;
 }
 
-/* @media screen and (max-width: 1200px) {
+
+/* Responsive CSS */
+
+ @media screen and (max-width: 1200px) {
   .pokemon-container {
       padding: 0.5rem 1.5rem;
   }
 
   .search-box input {
-      width: 30%;
+      width: 100%;
   }
 
   .search-container select {
-      border: 1px solid;
+      border: 1px solid #ccc;
+      padding: 4px;
   }
 }
 
 @media screen and (max-width: 1000px) {
+  #font {
+    font-size: 2rem;
+    margin-top: 15px;
+  }
   .pokemon-container {
       justify-content: space-evenly;
   }
 
   .search-box input {
-      width: 40%;
+    width: 40%;
+    max-width: 350px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #font {
+    font-size: 1.8rem;
+    margin-top: 10px;
+  }
+  .pokemon-container {
+      flex-direction: column; 
+      align-items: center;
+  }
+
+  .search-box input {
+    width: 60%;
+    max-width: 300px;
+  }
+  
+  .pokemon img {
+      width: 250px;
   }
 }
 
 @media screen and (max-width: 500px) {
+  #font {
+    font-size: 1.5rem;
+    margin-top: 5px;
+  }
   .search-box input {
-      width: 80%;
+    width: 80%;
+    max-width: 250px;
   }
 
   .pokemon {
-      justify-content: flex-start;
+      justify-content: center;
   }
 
-  .pokemon .pokemon-img {
+  .pokemon img {
       width: 200px;
   }
 }
 
 @media screen and (max-width: 400px) {
+  #font {
+    font-size: 1.2rem;
+  }
   .search-box input {
-      width: 80%;
+    width: 90%;
+    max-width: 200px;
   }
 
-  .pokemon .pokemon-img {
+  .pokemon img {
       width: 150px;
   }
-} */
+} 

@@ -51,13 +51,75 @@ async function fetchData(url) {
   return data;
 }
 
+function appendPokemon(pokemonData) {
+  pokemonData.forEach((pokemon) => {
+    const flipCard = document.createElement("div");
+    flipCard.classList.add("flip-card");
+
+    const flipCardInner = document.createElement("div");
+    flipCardInner.classList.add("flip-card-inner");
+
+    // Front Side of Card
+    const flipCardFront = document.createElement("div");
+    flipCardFront.classList.add("flip-card-front");
+
+    const numberPara = document.createElement("p");
+    numberPara.innerText = `#${pokemon.id}`;
+
+    const img = document.createElement("img");
+    img.src = pokemon.sprites.other.dream_world.front_default || pokemon.sprites.front_default;
+    img.id = `number_${pokemon.id}`;
+
+    const name = document.createElement("span");
+    name.innerText = pokemon.name;
+
+    const typeName = document.createElement("span");
+    typeName.innerText = pokemon.types[0].type.name;
+
+    flipCardFront.append(numberPara, img, name, typeName);
+
+    // Back Side of Card
+    const flipCardBack = document.createElement("div");
+    flipCardBack.classList.add("flip-card-back");
+
+    const backImg = document.createElement("img");
+    backImg.src = pokemon.sprites.other.dream_world.front_default || pokemon.sprites.front_default;
+
+    const backHeading = document.createElement("span");
+    backHeading.innerText = pokemon.name;
+
+    const abilityPara = document.createElement("div");
+    abilityPara.classList.add("ability");
+
+    abilityPara.innerHTML = `
+      <p><strong>Height: </strong>${pokemon.height} cm</p>
+      <p><strong>Weight: </strong>${pokemon.weight} kg</p>
+      ${pokemon.stats.map(stat => `<p class='stat'><strong>${stat.stat.name}:</strong> ${stat.base_stat}</p>`).join('')}
+    `;
+
+    //  Apply bg color based on type
+    if (isPokemonTypeExists(typeName.innerText)) {
+      flipCardBack.classList.add(typeName.innerText);
+      flipCardFront.classList.add(typeName.innerText);
+    }
+
+
+    flipCardBack.append(backImg, backHeading, abilityPara);
+    flipCardInner.append(flipCardFront, flipCardBack);
+    flipCard.append(flipCardInner);
+    pokemonDiv.append(flipCard);
+  });
+}
+
+
+
  async function displayPokemon(data) {
+  if(!data) return;
   loader.style.display = "block"
  const promises = data.results.map(pokemon => fetchData(pokemon.url));
  const pokemonData = await Promise.all(promises);
-
  loader.style.display = "none"
- display(pokemonData)
+ appendPokemon(pokemonData);
 }
 
 async function filterPokemonBySearch(data){
@@ -83,28 +145,43 @@ userInput.addEventListener("input",async(event)=>{
         return pokemon.name.includes(keyword);
     })
     filterPokemonBySearch(filterData)
-
 })
 
 
-filterBtn.addEventListener("click",()=>{
+filterBtn.addEventListener("click",async ()=>{
   pokemonDiv.innerHTML = "";
 
   const selectedOption = select.options[select.selectedIndex];
   const selectedValue = selectedOption.value;
-   
-  if(selectedValue === 'type'){
-    alert("please select some type !!");
-    window.location.reload();
-    return;
-     
-  }
-  const idx = pokemonTypes.findIndex(obj=>obj.type.includes(selectedValue));
-  const typeArray = pokemonTypes[idx].pokemon_type;
 
-  // console.log(typeArray)
-  display(typeArray);
+  if (selectedOption === "type") {
+    alert("Please select a type");
+    return;
+  }
+
+  // Fetch pokemon by type
+  loader.style.display = "block";
+  const typeData = await fetchData(`https://pokeapi.co/api/v2/type/${selectedValue}`);
+  loader.style.display = "none";
+
+  // Extract pokemon URLs
+  const filteredPokemonList = typeData.pokemon.slice(0,20).map((p) => p.pokemon);
+
+  // Fetch pokemon data
+  const promises = filteredPokemonList.map(p => fetchData(p.url));
+  const pokemonData = await Promise.all(promises);
+
+  // Display pokemon
+  display(pokemonData);
 })
+
+load.addEventListener("click", async () => {
+  offset += limit;
+
+  const response = await fetchData(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
+
+  if (response) displayPokemon(response);
+});
 
 
 function display(pokemonData){
