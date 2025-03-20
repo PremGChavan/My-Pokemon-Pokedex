@@ -3,7 +3,7 @@
 This project is a web application that utilizes the Pokémon API to display information about Pokémon.
 
 ## Hosted Link
-[My Pokémon Pokédex]()
+[My Pokémon Pokédex](https://premgchavan.github.io/My-Pokemon-Pokedex/)
 
 ## Features
 
