@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokemon API Project</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="wrapper">
+      <div class="pokemon">
+        <img class="gif hidden sm:block" src="giphy.gif" />
+      </div>
+      <div class="search-container">
+        <h1 id="font">My Pokémon Pokédex</h1>
+
+        <div class="option">
+          <select name="" id="select-opt">
+            <option value="type" selected disabled>Type</option>
+            <option value="grass">Grass</option>
+            <option value="fire">Fire</option>
+            <option value="water">Water</option>
+            <option value="bug">Bug</option>
+            <option value="normal">Normal</option>
+            <option value="electric">Electric</option>
+            <option value="ground">Ground</option>
+            <option value="fairy">Fairy</option>
+            <option value="fighting">Fighting</option>
+            <option value="psychic">Psychic</option>
+            <option value="rock">Rock</option>
+            <option value="ghost">Ghost</option>
+            <option value="ice">ice</option>
+            <option value="dragon">Dragon</option>
+          </select>
+          <input
+            type="submit"
+            value="Filter by type"
+            class="button-alt"
+            id="filterBtn"
+          />
+          <button class="resetBtn button-alt">Reset</button>
+        </div>
+        <div class="search-box">
+          <input
+            type="text"
+            placeholder="search pokemon here .. "
+            id="search"
+          />
+        </div>
+      </div>
+
+      <div class="pokemon-container">
+        <div class="loader">
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="loadMore">
+        <button id="load">Load More</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
